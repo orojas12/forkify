@@ -25,7 +25,7 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderError() {
+  renderError(message = this._errorMessage) {
     this._clear();
     const markup = `
       <div class="error">
@@ -34,13 +34,13 @@ export default class View {
             <use href="${icons}#icon-alert-triangle"></use>
           </svg>
         </div>
-        <p>${this._errorMessage}</p>
+        <p>${message}</p>
       </div>
     `;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
-  renderMessage(message = this._errorMessage) {
+  renderMessage(message = this._message) {
     this._clear();
     const markup = `
       <div class="error">
@@ -49,7 +49,7 @@ export default class View {
             <use href="${icons}#icon-smile"></use>
           </svg>
         </div>
-        <p>${this._errorMessage}</p>
+        <p>${message}</p>
       </div>
     `;
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
