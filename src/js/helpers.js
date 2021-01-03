@@ -1,69 +1,52 @@
+/**
+ * A module containing helper functions.
+ * @module helpers
+ */
+
 import { TIMEOUT_SEC } from './config.js';
 
-// export const getJSON = async function (url) {
-//   try {
-//     const request = fetch(url);
-//     const response = await Promise.race([request, timeout(TIMEOUT_SEC)]);
-//     const data = await response.json();
-
-//     if (!response.ok) throw new Error(`${data.message} (${response.status})`);
-
-//     return data;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-// export const postJSON = async function (url, uploadData) {
-//   try {
-//     const request = uploadData
-//       ? fetch(url, {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(uploadData),
-//         })
-//       : fetch(url);
-
-//     const response = await Promise.race([request, timeout(TIMEOUT_SEC)]);
-//     const data = await response.json();
-
-//     if (!response.ok) throw new Error(`${data.message} (${response.status})`);
-
-//     return data;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
-
-export const AJAX = async function (url, uploadData = undefined) {
+/**
+ * Sends a GET or POST request to an API. If no data is passed, defaults to a GET request.
+ * @param {string} url The URL to send the request to.
+ * @param {object} [data=undefined] If passed, send the data in a POST request.
+ * @returns {object} Parsed response data.
+ */
+export const AJAX = async function (url, data = undefined) {
   try {
-    const request = uploadData
+    const request = data
       ? fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(uploadData),
+          body: JSON.stringify(data),
         })
       : fetch(url);
 
     const response = await Promise.race([request, timeout(TIMEOUT_SEC)]);
-    const data = await response.json();
+    const responseData = await response.json();
 
-    if (!response.ok) throw new Error(`${data.message} (${response.status})`);
+    if (!response.ok)
+      throw new Error(`${responseData.message} (${response.status})`);
 
-    return data;
+    return responseData;
   } catch (err) {
     throw err;
   }
 };
 
-export const timeout = function (s) {
+/**
+ * Used as a timeout function inside a Promise.race(). Prevents an HTTP request from taking too
+ * long to return a response.
+ * @param {number} seconds The duration in seconds before rejecting a promise.
+ * @returns A rejected promise.
+ */
+export const timeout = function (seconds) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
+      reject(
+        new Error(`Request took too long! Timeout after ${seconds} seconds`)
+      );
+    }, seconds * 1000);
   });
 };

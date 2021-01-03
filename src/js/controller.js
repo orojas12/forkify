@@ -11,9 +11,8 @@ import addRecipeView from './view/addRecipeView.js';
 import 'core-js/stable';
 import 'regenerator-runtime';
 
-// https://forkify-api.herokuapp.com/v2
+// EVENT HANDLERS
 
-///////////////////////////////////////
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -125,6 +124,7 @@ const controlAddRecipe = async function (newRecipe) {
   }
 };
 
+// Attach event handlers to views
 const init = function () {
   bookmarksView.addHandlerRener(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
