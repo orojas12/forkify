@@ -22,9 +22,16 @@ class PaginationView extends View {
     if (currentPage === 1 && numPages > 1) {
       return `
         <button data-goto="${
+          currentPage - 1
+        }" class="hidden btn--inline pagination__btn--prev">
+          <svg class="search__icon">
+            <use href="${icons}#icon-arrow-left"></use>
+          </svg>
+        </button>
+        <p class="pagination__page" >Page ${currentPage} of ${numPages}</p>
+        <button data-goto="${
           currentPage + 1
         }" class="btn--inline pagination__btn--next">
-          <span>Page ${currentPage + 1}</span>
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-right"></use>
           </svg>
@@ -35,20 +42,19 @@ class PaginationView extends View {
     if (currentPage < numPages) {
       return `
         <button data-goto="${
-          currentPage + 1
-        }" class="btn--inline pagination__btn--next">
-          <span>${currentPage + 1}</span>
-          <svg class="search__icon">
-            <use href="${icons}#icon-arrow-right"></use>
-          </svg>
-        </button>
-        <button data-goto="${
           currentPage - 1
         }" class="btn--inline pagination__btn--prev">
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-left"></use>
           </svg>
-          <span>${currentPage - 1}</span>
+        </button>
+        <p class="pagination__page">Page ${currentPage} of ${numPages}</p>
+        <button data-goto="${
+          currentPage + 1
+        }" class="btn--inline pagination__btn--next">
+          <svg class="search__icon">
+            <use href="${icons}#icon-arrow-right"></use>
+          </svg>
         </button>
       `;
     }
@@ -61,7 +67,14 @@ class PaginationView extends View {
           <svg class="search__icon">
             <use href="${icons}#icon-arrow-left"></use>
           </svg>
-          <span>${currentPage - 1}</span>
+        </button>
+        <p class="pagination__page">Page ${currentPage} of ${numPages}</p>
+        <button data-goto="${
+          currentPage + 1
+        }" class="hidden btn--inline pagination__btn--next">
+          <svg class="search__icon">
+            <use href="${icons}#icon-arrow-right"></use>
+          </svg>
         </button>
       `;
     }

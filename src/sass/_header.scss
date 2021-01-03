@@ -15,8 +15,8 @@
 .search {
   background-color: #fff;
   border-radius: 10rem;
-  display: block;
-  align-items: center;
+  display: flex;
+  justify-content: center;
   padding-left: 3rem;
   transition: all 0.3s;
 
